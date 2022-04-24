@@ -1,0 +1,14 @@
+name = "errstat"
+version = "0.1.0"
+license = "license"
+author = "Tomohiro Degawa"
+maintainer = "@degawa/errstat"
+copyright = "Copyright 2022, Tomohiro Degawa"
+
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+
+[install]
+library = true
