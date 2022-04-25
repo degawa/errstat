@@ -38,13 +38,13 @@ function inverse(x, stat, msg) result(y)
 
     y = 1d0/x
 
-    if (ieee_is_nan(x)) then
+    if (ieee_is_nan(y)) then
         if (present(stat)) stat = 1
         if (present(msg)) msg = "the result is not-a-number"
         return
     end if
 
-    if (.not. ieee_is_finite(x)) then
+    if (.not. ieee_is_finite(y)) then
         if (present(stat)) stat = 2
         if (present(msg)) msg = "the result is infinite"
         return
@@ -58,12 +58,12 @@ end function inverse
 The errstat simplifies the `if` statements as below:
 
 ```Fortran
-    if (ieee_is_nan(x)) then
+    if (ieee_is_nan(y)) then
         call catch_status(1, "the result is not-a-number", stat, msg)
         return
     end if
 
-    if (.not. ieee_is_finite(x)) then
+    if (.not. ieee_is_finite(y)) then
         call catch_status(2, "the result is infinite", stat, msg)
         return
     end if
@@ -85,12 +85,12 @@ The errstat also provides a user-defined derived type `error_stat_type` that com
 The error handling can be more simplified.
 
 ```Fortran
-    if (ieee_is_nan(x)) then
+    if (ieee_is_nan(y)) then
         call catch_error(1, "the result is not-a-number", err)
         return
     end if
 
-    if (.not. ieee_is_finite(x)) then
+    if (.not. ieee_is_finite(y)) then
         call catch_error(2, "the result is infinite", err)
         return
     end if
