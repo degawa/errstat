@@ -79,9 +79,6 @@ contains
     end function get_status
 
     !| gets the error message as auto-reallocatable string.
-    !
-    !@warning This procedure may return an unallocated string.
-    !
     function get_message(this) result(msg)
         implicit none
         class(error_stat_type), intent(in) :: this
@@ -89,6 +86,7 @@ contains
         character(:), allocatable :: msg
             !! the error message.
 
+        msg = ""
         if (allocated(this%msg)) msg = this%msg
     end function get_message
 
