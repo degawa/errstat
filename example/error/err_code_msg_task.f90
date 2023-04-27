@@ -13,67 +13,40 @@ module ex_err_code_msg_task
     end enum
 
     type, public, extends(task_type) :: print_task_type
-        integer(int32), private :: stat
-        character(:), allocatable, private :: msg
         real(real64) :: x
-        logical, private :: stat_set
-        logical, private :: msg_set
     contains
         procedure, public, pass :: execute
-        procedure, public, pass :: set_stat
-        procedure, public, pass :: set_msg
     end type print_task_type
 
 contains
-    subroutine execute(this)
+    subroutine execute(this, err, stat, msg)
         implicit none
         class(print_task_type), intent(in) :: this
+        type(error_stat_type), intent(in), optional :: err
+        integer(int32), intent(in), optional :: stat
+        character(*), intent(in), optional :: msg
 
         print '("input value x is", E16.7)', this%x
-        if (this%stat_set) &
-            print *, "status :", this%stat
-        if (this%msg_set) &
-            print *, "message :", this%msg
+        if (present(err)) then
+            print *, "status :", err%get_status()
+            print *, "message :", err%get_message()
+        end if
     end subroutine execute
 
-    subroutine set_stat(this, stat)
-        implicit none
-        class(print_task_type), intent(inout) :: this
-        integer(int32), intent(in), optional :: stat
-        if (present(stat)) then
-            this%stat = stat
-            this%stat_set = .true.
-        end if
-    end subroutine set_stat
-
-    subroutine set_msg(this, msg)
-        implicit none
-        class(print_task_type), intent(inout) :: this
-        character(*), intent(in), optional :: msg
-        if (present(msg)) then
-            this%msg = msg
-            this%msg_set = .true.
-        end if
-    end subroutine set_msg
-
-    function print_task_factory(x, stat, msg) result(new_task)
+    function print_task_factory(x) result(new_task)
         implicit none
         real(real64), intent(in) :: x
-        integer(int32), intent(in), optional :: stat
-        character(*), intent(in), optional :: msg
 
         type(print_task_type) :: new_task
 
         new_task%x = x
-        call new_task%set_stat(stat)
-        call new_task%set_msg(msg)
     end function print_task_factory
 
     function inverse(x, err) result(y)
         use, intrinsic :: ieee_arithmetic
         implicit none
         real(real64), intent(in) :: x
-        type(error_stat_type), intent(inout), optional :: err
+        type(error_stat_type), intent(out), optional :: err
 
         real(real64) :: y
         y = 0d0
@@ -82,8 +55,7 @@ contains
             call catch_error(ERROR_INVALID_INPUT, &
                              "input value is invalid", &
                              err, &
-                             print_task_factory(x, ERROR_INVALID_INPUT, &
-                                                "input value is invalid"))
+                             print_task_factory(x))
             return
         end if
 
@@ -93,8 +65,7 @@ contains
             call catch_error(ERROR_VALUE_IS_NAN, &
                              "value is nan", &
                              err, &
-                             print_task_factory(x, ERROR_VALUE_IS_NAN, &
-                                                "value is nan"))
+                             print_task_factory(x))
             return
         end if
 
@@ -102,8 +73,7 @@ contains
             call catch_error(ERROR_VALUE_IS_INFINITE, &
                              "value is infinite", &
                              err, &
-                             print_task_factory(x, ERROR_VALUE_IS_INFINITE, &
-                                                "value is infinite"))
+                             print_task_factory(x))
             return
         end if
 
