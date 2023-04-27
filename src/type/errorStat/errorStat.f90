@@ -34,8 +34,6 @@ module errstat_type_errorStat
         character(:), allocatable, private :: msg
             !! an error message.<br>
             !! This is not allocated when no error occurred.
-        logical, private :: does_error_occur = .false.
-            !! a flag for error occurrence.
     contains
         procedure, public, pass :: set_status_and_message
         !* setter for `error_stat_type%stat` and `error_stat_type%msg`.
@@ -43,7 +41,7 @@ module errstat_type_errorStat
         !* getter for `error_stat_type%stat`.
         procedure, public, pass :: get_message
         !* getter for `error_stat_type%msg`.
-        procedure, public, pass :: get_error_occurrence_flag
+        procedure, public, pass :: error_occurred
         !* getter for `error_stat_type%does_error_occur`.
         procedure, public, pass :: initialize
         !* initialize `error_stat_type` object.
@@ -64,7 +62,6 @@ contains
 
         this%stat = stat
         this%msg = msg
-        this%does_error_occur = (stat /= success_status_code)
     end subroutine set_status_and_message
 
     !>Returns the status code.
@@ -90,16 +87,16 @@ contains
         if (allocated(this%msg)) msg = this%msg
     end function get_message
 
-    !>Returns the flag for error occurrence.
-    function get_error_occurrence_flag(this) result(does_error_occur)
+    !>Returns `.true.` if error occurred and returns `.false.` elsewhere.
+    function error_occurred(this)
         implicit none
         class(error_stat_type), intent(in) :: this
             !! passed-object dummy argument.
-        logical :: does_error_occur
+        logical :: error_occurred
             !! the flag that error occurred or not.
 
-        does_error_occur = this%does_error_occur
-    end function get_error_occurrence_flag
+        error_occurred = (this%get_status() /= success_status_code)
+    end function error_occurred
 
     !>Initializes `error_stat_type` object.
     !>This procedure
@@ -115,7 +112,6 @@ contains
 
         this%stat = success_status_code
         if (allocated(this%msg)) deallocate (this%msg)
-        this%does_error_occur = .false.
     end subroutine initialize
 
     !>Finializes an `error_stat_type` object.
