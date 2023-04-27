@@ -16,7 +16,7 @@ contains
         implicit none
         class(append_task_type), intent(in) :: this
         type(error_stat_type), intent(inout), optional :: err
-        integer(int32), intent(in), optional :: stat
+        integer(int32), intent(inout), optional :: stat
         character(*), intent(inout), optional :: msg
 
         if (present(err)) then

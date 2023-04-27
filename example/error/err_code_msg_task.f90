@@ -23,7 +23,7 @@ contains
         implicit none
         class(print_task_type), intent(in) :: this
         type(error_stat_type), intent(inout), optional :: err
-        integer(int32), intent(in), optional :: stat
+        integer(int32), intent(inout), optional :: stat
         character(*), intent(inout), optional :: msg
 
         print '("input value x is", E16.7)', this%x
