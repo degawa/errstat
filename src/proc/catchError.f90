@@ -1,7 +1,7 @@
 !>The `errstat_proc_catchError` provides procedures relative to catching a error.
 !>
 !>The procedures include subroutines to catch and reflect error status
-!>to an `intent(inout)` `error_stat_type` argument with different `intent(in)` arguments.
+!>to an `intent(out)` `error_stat_type` argument with different `intent(in)` arguments.
 !>
 module errstat_proc_catchError
     use, intrinsic :: iso_fortran_env
@@ -31,7 +31,7 @@ contains
             !! an error status code
         character(*)            , intent(in)                :: err_msg
             !! an error message
-        type(error_stat_type)   , intent(inout) , optional  :: err_stat
+        type(error_stat_type)   , intent(out)   , optional  :: err_stat
             !! an object for handling an error status and message.
         class(task_type)        , intent(in)    , optional  :: additional_task
             !! additional task to be executed
@@ -61,7 +61,7 @@ contains
             !! an error status code
         procedure(Iget_error_message)                               :: get_message
             !! procedure to get the error message from the status code
-        type(error_stat_type)           , intent(inout) , optional  :: err_stat
+        type(error_stat_type)           , intent(out)   , optional  :: err_stat
             !! an object for handling an error status and message.
         class(task_type)                , intent(in)    , optional  :: additional_task
             !! additional task to be executed
@@ -82,7 +82,7 @@ contains
         use :: errstat_type_errorStat
         use :: errstat_constant_status
         implicit none
-        type(error_stat_type), intent(inout), optional :: err_stat
+        type(error_stat_type), intent(out), optional :: err_stat
             !! an object for handling an error status and message.
 
         if (present(err_stat)) &

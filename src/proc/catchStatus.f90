@@ -35,8 +35,10 @@ contains
             !! an error message
         integer(int32)              , intent(out)   , optional  :: stat
             !! a variable to store status code
-        character(:), allocatable   , intent(inout) , optional  :: msg
+        character(:), allocatable   , intent(out)   , optional  :: msg
             !! a string to store error message
+        ! If passing `msg` to procedures called from this procedure,
+        ! must change the intent attribute from `(out)` to `(inout)`.
         class(task_type)            , intent(in)    , optional  :: additional_task
             !! additional task to be executed
             !! after setting `stat` and `msg`
@@ -71,6 +73,7 @@ contains
             !! a variable to store status code
         character(:)    , allocatable   , intent(inout) , optional  :: msg
             !! a string to store error message
+        ! intent(out) causes runtime error when compiling with gfortran.
         class(task_type)                , intent(in)    , optional  :: additional_task
             !! additional task to be executed
             !! after setting `stat` and `msg`
@@ -99,6 +102,7 @@ contains
             !! a variable to store status code
         character(:), allocatable       , intent(inout) , optional  :: msg
             !! a string to store error message
+        ! intent(out) causes runtime error when compiling with gfortran
         class(task_type)                , intent(in)    , optional  :: additional_task
             !! additional task to be executed
             !! after setting `stat` and `msg`
