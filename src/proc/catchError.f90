@@ -77,7 +77,6 @@ contains
     !>
     !>- set `stat` to `success_status_code`
     !>- set `msg` to `success_status_msg`
-    !>- set `does_error_occur` to `.false.`
     !>
     subroutine set_success(err_stat)
         use :: errstat_type_errorStat

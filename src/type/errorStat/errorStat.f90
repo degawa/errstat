@@ -30,23 +30,23 @@ module errstat_type_errorStat
     !>
     type, public :: error_stat_type
         integer(int32), private :: stat = success_status_code
-            !! an error status code.
+            !! an error status code
         character(:), allocatable, private :: msg
             !! an error message.<br>
-            !! This is not allocated when no error occurred.
+            !! This is not allocated when no error occurred
     contains
         procedure, public, pass :: set_status_and_message
-        !* setter for `error_stat_type%stat` and `error_stat_type%msg`.
+        !* set error status and message
         procedure, public, pass :: get_status
-        !* getter for `error_stat_type%stat`.
+        !* returns the error sutatus
         procedure, public, pass :: get_message
-        !* getter for `error_stat_type%msg`.
+        !* returns the error message
         procedure, public, pass :: error_occurred
-        !* getter for `error_stat_type%does_error_occur`.
+        !* returns `.true.` if error occurred
         procedure, public, pass :: initialize
-        !* initialize `error_stat_type` object.
+        !* initialize the `error_stat_type` instance
         final :: finalize
-        !* finalize `error_stat_type` object.
+        !* finalize the `error_stat_type` instance
     end type error_stat_type
 
 contains
@@ -103,7 +103,6 @@ contains
     !>
     !>- set `stat` to `success_status_code`
     !>- deallocate `msg`
-    !>- set `does_error_occur` to `.false.`
     !>
     subroutine initialize(this)
         implicit none

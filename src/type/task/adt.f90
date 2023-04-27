@@ -11,7 +11,7 @@ module errstat_type_task_adt
     type, public, abstract :: task_type
     contains
         procedure(ItaskExecute), public, pass, deferred :: execute
-        !*executes concrete task.
+        !*executes concrete task
     end type task_type
 
     abstract interface
