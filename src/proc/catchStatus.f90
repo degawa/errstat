@@ -54,8 +54,14 @@ contains
                 msg = success_status_msg
         end if
 
-        if (present(additional_task)) &
-            call additional_task%execute(stat=stat, msg=msg)
+        if (present(additional_task)) then
+            if (present(stat) .and. .not. present(msg)) &
+                call additional_task%execute(stat=stat)
+            if (present(msg) .and. .not. present(stat)) &
+                call additional_task%execute(msg=msg)
+            if (present(stat) .and. present(msg)) &
+                call additional_task%execute(stat=stat, msg=msg)
+        end if
     end subroutine catch_status_w_code_msg
 
     !>Sets `stat` from `stat_code`.
