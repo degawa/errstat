@@ -31,6 +31,10 @@ contains
             print *, "status :", err%get_status()
             print *, "message :", err%get_message()
         end if
+
+        return
+        if (present(stat)) continue
+        if (present(msg)) continue
     end subroutine execute
 
     function print_task_factory(x) result(new_task)
@@ -42,11 +46,11 @@ contains
         new_task%x = x
     end function print_task_factory
 
-    function inverse(x, err) result(y)
+    function inverse(x, stat) result(y)
         use, intrinsic :: ieee_arithmetic
         implicit none
         real(real64), intent(in) :: x
-        type(error_stat_type), intent(out), optional :: err
+        type(error_stat_type), intent(out), optional :: stat
 
         real(real64) :: y
         y = 0d0
@@ -54,7 +58,7 @@ contains
         if (transfer(x, mold=0_int64) == 0) then
             call catch_error(ERROR_INVALID_INPUT, &
                              "input value is invalid", &
-                             err, &
+                             stat, &
                              print_task_factory(x))
             return
         end if
@@ -64,7 +68,7 @@ contains
         if (ieee_is_nan(y)) then
             call catch_error(ERROR_VALUE_IS_NAN, &
                              "value is nan", &
-                             err, &
+                             stat, &
                              print_task_factory(x))
             return
         end if
@@ -72,12 +76,12 @@ contains
         if (.not. ieee_is_finite(y)) then
             call catch_error(ERROR_VALUE_IS_INFINITE, &
                              "value is infinite", &
-                             err, &
+                             stat, &
                              print_task_factory(x))
             return
         end if
 
-        call set_success(err)
+        call set_success(stat)
     end function inverse
 end module ex_err_code_msg_task
 
@@ -87,15 +91,15 @@ program err_code_msg_task
     use :: errstat
     implicit none
 
-    type(error_stat_type) :: err
+    type(error_stat_type) :: stat
 
     real(real64) :: y
 
     y = inverse(0d0)
     print *, y
 
-    y = inverse(0d0, err)
-    if (error_occurred(err)) then
-        print *, y, err%get_status(), err%get_message()
+    y = inverse(0d0, stat)
+    if (error_occurred(stat)) then
+        print *, y, stat%get_status(), stat%get_message()
     end if
 end program err_code_msg_task

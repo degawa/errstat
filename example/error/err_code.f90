@@ -13,11 +13,11 @@ module ex_err_code_msg
     end enum
 
 contains
-    function inverse(x, err) result(y)
+    function inverse(x, stat) result(y)
         use, intrinsic :: ieee_arithmetic
         implicit none
         real(real64), intent(in) :: x
-        type(error_stat_type), intent(out), optional :: err
+        type(error_stat_type), intent(out), optional :: stat
 
         real(real64) :: y
         y = 0d0
@@ -25,23 +25,23 @@ contains
         if (transfer(x, mold=0_int64) == 0) then
             call catch_error(ERROR_INVALID_INPUT, &
                              "input value is invalid", &
-                             err)
+                             stat)
             return
         end if
 
         y = ieee_value(x, ieee_positive_inf)
 
         if (ieee_is_nan(y)) then
-            call catch_error(ERROR_VALUE_IS_NAN, "value is nan", err)
+            call catch_error(ERROR_VALUE_IS_NAN, "value is nan", stat)
             return
         end if
 
         if (.not. ieee_is_finite(y)) then
-            call catch_error(ERROR_VALUE_IS_INFINITE, "value is infinite", err)
+            call catch_error(ERROR_VALUE_IS_INFINITE, "value is infinite", stat)
             return
         end if
 
-        call set_success(err)
+        call set_success(stat)
     end function inverse
 end module ex_err_code_msg
 
@@ -51,15 +51,15 @@ program err_code
     use :: errstat
     implicit none
 
-    type(error_stat_type) :: err
+    type(error_stat_type) :: stat
 
     real(real64) :: y
 
     y = inverse(0d0)
     print *, y
 
-    y = inverse(1d0, err)
-    if (error_occurred(err)) then
-        print *, err%get_message()
+    y = inverse(1d0, stat)
+    if (error_occurred(stat)) then
+        print *, stat%get_message()
     end if
 end program err_code

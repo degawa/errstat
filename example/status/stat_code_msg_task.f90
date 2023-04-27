@@ -29,6 +29,9 @@ contains
         print '("input value x is", E16.7)', this%x
         if (present(stat)) print *, "status :", stat
         if (present(msg)) print *, "message :", msg
+
+        return
+        if (present(err)) continue
     end subroutine execute
 
     function print_task_factory(x) result(new_task)
