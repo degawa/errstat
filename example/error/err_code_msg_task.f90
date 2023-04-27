@@ -22,9 +22,9 @@ contains
     subroutine execute(this, err, stat, msg)
         implicit none
         class(print_task_type), intent(in) :: this
-        type(error_stat_type), intent(in), optional :: err
+        type(error_stat_type), intent(inout), optional :: err
         integer(int32), intent(in), optional :: stat
-        character(*), intent(in), optional :: msg
+        character(*), intent(inout), optional :: msg
 
         print '("input value x is", E16.7)', this%x
         if (present(err)) then
