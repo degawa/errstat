@@ -2,7 +2,7 @@
 !>relateve to additional task in the error or status catching procedures.
 !>
 module errstat_type_task_adt
-    use, intrinsic :: iso_fortran_env
+    use :: errstat_type_errorStat
     implicit none
     private
 
@@ -16,10 +16,18 @@ module errstat_type_task_adt
 
     abstract interface
         !>An interface for type-bound procedure `task_type%execute`
-        subroutine ItaskExecute(this)
+        subroutine ItaskExecute(this, err, stat, msg)
+            use, intrinsic :: iso_fortran_env
             import task_type
+            import error_stat_type
             class(task_type), intent(in) :: this
-                !! passed dummy argument
+                !! passed-object dummy argument.
+            type(error_stat_type), intent(in), optional :: err
+                !! error status
+            integer(int32), intent(in), optional :: stat
+                !! error status
+            character(*), intent(in), optional :: msg
+                !! error message
         end subroutine ItaskExecute
     end interface
 end module errstat_type_task_adt

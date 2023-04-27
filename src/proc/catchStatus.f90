@@ -52,7 +52,7 @@ contains
         end if
 
         if (present(additional_task)) &
-            call additional_task%execute()
+            call additional_task%execute(stat=stat, msg=msg)
     end subroutine catch_status_w_code_msg
 
     !>Sets `stat` from `stat_code`.

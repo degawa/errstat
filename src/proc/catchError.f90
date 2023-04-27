@@ -43,7 +43,7 @@ contains
         end if
 
         if (present(additional_task)) &
-            call additional_task%execute()
+            call additional_task%execute(err_stat)
     end subroutine catch_error_w_code_msg
 
     !>Sets a status of `err_stat` from `stat_code` and
