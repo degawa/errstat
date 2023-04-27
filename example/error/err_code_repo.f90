@@ -77,7 +77,7 @@ contains
             return
         end if
 
-        ! y = ieee_value(x, ieee_quiet_nan)
+        y = 1d0/x
 
         if (ieee_is_nan(y)) then
             call catch_error(err%value_is_nan, err, stat)
