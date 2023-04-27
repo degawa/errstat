@@ -37,6 +37,8 @@ module errstat_type_errorStat
     contains
         procedure, public, pass :: set_status_and_message
         !* set error status and message
+        procedure, public, pass :: append_message
+        !* append message to error message
         procedure, public, pass :: get_status
         !* returns the error sutatus
         procedure, public, pass :: get_message
@@ -63,6 +65,17 @@ contains
         this%stat = stat
         this%msg = msg
     end subroutine set_status_and_message
+
+    !>Appends the message to the error message
+    subroutine append_message(this, msg)
+        implicit none
+        class(error_stat_type), intent(inout) :: this
+            !! passed-object dummy argument.
+        character(*), intent(in) :: msg
+            !! an error message.
+
+        this%msg = this%msg//" - "//msg
+    end subroutine append_message
 
     !>Returns the status code.
     function get_status(this) result(stat)
