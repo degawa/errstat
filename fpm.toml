@@ -1,9 +1,9 @@
 name = "errstat"
-version = "0.1.0"
-license = "license"
+version = "0.2.0"
+license = "MIT"
 author = "Tomohiro Degawa"
 maintainer = "@degawa/errstat"
-copyright = "Copyright 2022, Tomohiro Degawa"
+copyright = "Copyright 2022-2023, Tomohiro Degawa"
 
 [build]
 auto-executables = true
