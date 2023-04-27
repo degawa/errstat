@@ -14,12 +14,17 @@ module errstat_proc_errorOccurred
 contains
 
     !>Returns `.true.` if an `error_stat_type` object caught an error.
+    !>Returns `.false.` if No error occurred or err is not present.
     logical function error_occurred(err)
         use :: errstat_proc_isStatus
         implicit none
-        type(error_stat_type), intent(in) :: err
+        type(error_stat_type), intent(in), optional :: err
             !! an error status object.
 
-        error_occurred = err%error_occurred()
+        if (present(err)) then
+            error_occurred = err%error_occurred()
+        else
+            error_occurred = .false.
+        end if
     end function error_occurred
 end module errstat_proc_errorOccurred
