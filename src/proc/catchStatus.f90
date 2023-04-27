@@ -1,16 +1,16 @@
-!| The `errstat_proc_catchStatus` provides procedures relative to catching status.
-!
-! The procedures include subroutines to catch and reflect error status
-! to `intent(out)/intent(inout)` primitive variables arguments
-! with different `intent(in)` arguments.
-!
+!>The `errstat_proc_catchStatus` provides procedures relative to catching status.
+!>
+!>The procedures include subroutines to catch and reflect error status
+!>to `intent(out)/intent(inout)` primitive variables arguments
+!>with different `intent(in)` arguments.
+!>
 module errstat_proc_catchStatus
     use, intrinsic :: iso_fortran_env
     implicit none
     private
     public :: catch_status
 
-    !| Set an error status code and error message to arguments.
+    !>Set an error status code and error message to arguments.
     interface catch_status
         procedure :: catch_status_w_code
         procedure :: catch_status_w_code_msg
@@ -19,9 +19,9 @@ module errstat_proc_catchStatus
 
 contains
 
-    !| Set `stat` and `msg` from `stat_code` and `err_msg`, respectively.
-    ! After setting those, additional task is executed
-    ! if `additional_task` is passed.
+    !>Sets `stat` and `msg` from `stat_code` and `err_msg`, respectively.
+    !>After setting those, additional task is executed
+    !>if `additional_task` is passed.
     subroutine catch_status_w_code_msg(stat_code, err_msg, stat, msg &
                                        , additional_task)
         use :: errstat_type_task_adt
@@ -55,9 +55,9 @@ contains
             call additional_task%execute()
     end subroutine catch_status_w_code_msg
 
-    !| Set `stat` from `stat_code`.
-    ! After setting it, additional task is executed
-    ! if `additional_task` is passed.
+    !>Sets `stat` from `stat_code`.
+    !>After setting it, additional task is executed
+    !>if `additional_task` is passed.
     subroutine catch_status_w_code(stat_code, stat, msg &
                                    , additional_task)
         use :: errstat_type_task_adt
@@ -81,9 +81,9 @@ contains
                                      , additional_task)
     end subroutine catch_status_w_code
 
-    !| Set `stat` from `stat_code`, and set `msg` from callback procedure `get_message`.
-    ! After setting those, additional task is executed
-    ! if `additional_task` is passed.
+    !>Sets `stat` from `stat_code`, and set `msg` from callback procedure `get_message`.
+    !>After setting those, additional task is executed
+    !>if `additional_task` is passed.
     subroutine catch_status_w_code_getter(stat_code, get_message, stat, msg &
                                           , additional_task)
         use :: errstat_type_task_adt

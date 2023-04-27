@@ -1,10 +1,10 @@
-!| The `errstat_constant_status` provides constants related to error status.
-!
-! The constants include the status code and the message when a processing is succeeded.
-! An alternative message is also defined. This will pass internally to
-! a procedure [[catch_status_w_code_msg]] when [[catch_status]] is called
-! so that the error message is not retrieved.
-!
+!>The `errstat_constant_status` provides constants related to error status.
+!>
+!>The constants include the status code and the message when a processing is succeeded.
+!>An alternative message is also defined. This will pass internally to
+!>a procedure [[catch_status_w_code_msg]] when [[catch_status]] is called
+!>so that the error message is not retrieved.
+!>
 module errstat_constant_status
     use, intrinsic :: iso_fortran_env
     use, intrinsic :: iso_c_binding

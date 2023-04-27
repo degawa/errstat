@@ -1,14 +1,14 @@
-!| The `errstat_proc_isStatus` provides constants and procedures
-! related to error statuses.
-!
-! The constants include statuses representing success and error-occurrence.
-! The statuses are defined as constants of private user-defined derived type
-! objects. The user-defined type provides `==` and `/=` operators
-! to determine if an error status code is success or error-occurrence.
-!
-! The procedures include functions to check an error status code is
-! success or error-occurrence.
-!
+!>The `errstat_proc_isStatus` provides constants and procedures
+!>related to error statuses.
+!>
+!>The constants include statuses representing success and error-occurrence.
+!>The statuses are defined as constants of private user-defined derived type
+!>objects. The user-defined type provides `==` and `/=` operators
+!>to determine if an error status code is success or error-occurrence.
+!>
+!>The procedures include functions to check an error status code is
+!>success or error-occurrence.
+!>
 module errstat_proc_isStatus
     use, intrinsic :: iso_fortran_env
     use, intrinsic :: iso_c_binding
@@ -17,24 +17,24 @@ module errstat_proc_isStatus
     private
     public :: is_status
 
-    !| Returns `.true.` if a status code represents
-    ! a status specified by the 2nd argument.
+    !>Returns `.true.` if a status code represents
+    !>a status specified by the 2nd argument.
     interface is_status
         procedure :: is_status_i4
         procedure :: is_status_str
     end interface
 
-    !| An user-defined derived type to indicate a status of whether
-    ! a process was succeeded or not.
+    !>An user-defined derived type to indicate a status of whether
+    !>a process was succeeded or not.
     type, private :: errstat_status_type
         logical, public :: status
             !! status of  of whether a process was succeeded or not.<br>
             !! This component must be public for declaring constants.
     contains
         procedure, public, pass :: errstat_status_is_status_equal
-            !! comparator to determine that two objects represent the same state.
+        !* comparator to determine that two objects represent the same state.
         procedure, public, pass :: errstat_status_is_status_not_equal
-            !! comparator to determine that two objects do not represent the same state.
+        !* comparator to determine that two objects do not represent the same state.
         generic :: operator(==) => errstat_status_is_status_equal
         generic :: operator(/=) => errstat_status_is_status_not_equal
     end type errstat_status_type
@@ -44,7 +44,7 @@ module errstat_proc_isStatus
     type(errstat_status_type), private, parameter :: error_occurred = errstat_status_type(.false.)
         !! a constant representing a status of error-occurrence.
 
-    !| An user-defined derived type to list possible statuses.
+    !>An user-defined derived type to list possible statuses.
     type, private :: errstat_statuses_type
         type(errstat_status_type) :: succeeded
             !! a status of success.
@@ -58,7 +58,7 @@ module errstat_proc_isStatus
         !! A constant list to enable users to select possible statuses.
 
 contains
-    !| Return `.true.` if a status code `stat` represents `status`.
+    !>Returns `.true.` if a status code `stat` represents `status`.
     logical function is_status_i4(stat, status)
         implicit none
         integer(int32), intent(in) :: stat
@@ -73,7 +73,7 @@ contains
         end if
     end function is_status_i4
 
-    !| Return `.true.` if a message `msg` represents `status`.
+    !>Returns `.true.` if a message `msg` represents `status`.
     logical function is_status_str(msg, status)
         implicit none
         character(*), intent(in) :: msg
@@ -88,7 +88,7 @@ contains
         end if
     end function is_status_str
 
-    !| Returns `.true.` if lhs and rhs represents the same status.
+    !>Returns `.true.` if lhs and rhs represents the same status.
     logical function errstat_status_is_status_equal(lhs, rhs)
         implicit none
         class(errstat_status_type), intent(in) :: lhs
@@ -99,7 +99,7 @@ contains
         errstat_status_is_status_equal = (lhs%status .eqv. rhs%status)
     end function errstat_status_is_status_equal
 
-    !| Returns `.true.` if lhs and rhs do not represent the same status.
+    !>Returns `.true.` if lhs and rhs do not represent the same status.
     logical function errstat_status_is_status_not_equal(lhs, rhs)
         implicit none
         class(errstat_status_type), intent(in) :: lhs
