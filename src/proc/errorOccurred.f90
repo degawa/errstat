@@ -4,7 +4,7 @@
 !>The procedure is a function to check an error occurred from
 !>an `error_stat_type` object component.
 !>
-module errstat_proc_doesErrorOccurred
+module errstat_proc_errorOccurred
     use, intrinsic :: iso_fortran_env
     use :: errstat_type_errorStat
     implicit none
@@ -22,4 +22,4 @@ contains
 
         error_occurred = err%error_occurred()
     end function error_occurred
-end module errstat_proc_doesErrorOccurred
+end module errstat_proc_errorOccurred

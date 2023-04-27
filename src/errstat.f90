@@ -18,7 +18,7 @@ module errstat
         catch_error, set_success
     use :: errstat_proc_isStatus, only: &
         is_status, statuses
-    use :: errstat_proc_doesErrorOccurred, only: &
+    use :: errstat_proc_errorOccurred, only: &
         error_occurred
     use :: errstat_interface_getErrorMessage, only: &
         Iget_error_message
