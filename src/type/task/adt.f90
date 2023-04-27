@@ -22,11 +22,11 @@ module errstat_type_task_adt
             import error_stat_type
             class(task_type), intent(in) :: this
                 !! passed-object dummy argument.
-            type(error_stat_type), intent(in), optional :: err
+            type(error_stat_type), intent(inout), optional :: err
                 !! error status
             integer(int32), intent(in), optional :: stat
                 !! error status
-            character(*), intent(in), optional :: msg
+            character(*), intent(inout), optional :: msg
                 !! error message
         end subroutine ItaskExecute
     end interface
