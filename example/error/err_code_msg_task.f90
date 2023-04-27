@@ -125,7 +125,7 @@ program err_code_msg_task
     print *, y
 
     y = inverse(0d0, err)
-    if (does_error_occur(err)) then
+    if (error_occurred(err)) then
         print *, y, err%get_status(), err%get_message()
     end if
 end program err_code_msg_task

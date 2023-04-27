@@ -9,17 +9,17 @@ module errstat_proc_doesErrorOccurred
     use :: errstat_type_errorStat
     implicit none
     private
-    public :: does_error_occur
+    public :: error_occurred
 
 contains
 
     !>Returns `.true.` if an `error_stat_type` object caught an error.
-    logical function does_error_occur(err)
+    logical function error_occurred(err)
         use :: errstat_proc_isStatus
         implicit none
         type(error_stat_type), intent(in) :: err
             !! an error status object.
 
-        does_error_occur = err%get_error_occurrence_flag()
-    end function does_error_occur
+        error_occurred = err%error_occurred()
+    end function error_occurred
 end module errstat_proc_doesErrorOccurred

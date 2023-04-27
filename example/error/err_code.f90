@@ -59,7 +59,7 @@ program err_code
     print *, y
 
     y = inverse(1d0, err)
-    if (does_error_occur(err)) then
+    if (error_occurred(err)) then
         print *, err%get_message()
     end if
 end program err_code
