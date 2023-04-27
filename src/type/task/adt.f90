@@ -24,7 +24,7 @@ module errstat_type_task_adt
                 !! passed-object dummy argument.
             type(error_stat_type), intent(inout), optional :: err
                 !! error status
-            integer(int32), intent(in), optional :: stat
+            integer(int32), intent(inout), optional :: stat
                 !! error status
             character(*), intent(inout), optional :: msg
                 !! error message
