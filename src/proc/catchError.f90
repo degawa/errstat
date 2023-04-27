@@ -14,6 +14,7 @@ module errstat_proc_catchError
     interface catch_error
         procedure :: catch_error_w_code_msg
         procedure :: catch_error_w_code_getter
+        procedure :: catch_error_w_repository
     end interface
 
 contains
@@ -71,6 +72,31 @@ contains
         call catch_error_w_code_msg(stat_code, get_message(stat_code), &
                                     err_stat, additional_task)
     end subroutine catch_error_w_code_getter
+
+    !>Sets a status and a message obtained from the `message_repository`.
+    !>After setting those, additional task is executed
+    !>if `additional_task` is passed.
+    subroutine catch_error_w_repository(stat_code, message_repository, err_stat &
+                                        , additional_task)
+        use :: errstat_type_task_adt
+        use :: errstat_type_errorStat
+        use :: errstat_repository_message
+        implicit none
+        !&<
+        integer(int32)                  , intent(in)                :: stat_code
+            !! an error status code
+        class(message_repository_atype) , intent(in)                :: message_repository
+            !! a repository containing error messages
+        type(error_stat_type)           , intent(out)   , optional  :: err_stat
+            !! an object for handling an error status and message.
+        class(task_type)                , intent(in)    , optional  :: additional_task
+            !! additional task to be executed
+            !! after setting `stat` and `msg`
+        !&>
+
+        call catch_error_w_code_msg(stat_code, message_repository%get(stat_code), &
+                                    err_stat, additional_task)
+    end subroutine catch_error_w_repository
 
     !>Sets `error_stat_type` object as the success status.
     !>This procedure
