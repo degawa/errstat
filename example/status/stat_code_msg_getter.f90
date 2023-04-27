@@ -31,6 +31,7 @@ contains
         real(real64), intent(in) :: x
         integer(int32), intent(out), optional :: stat
         character(:), allocatable, intent(inout), optional :: msg
+        ! intent(out) causes runtime error when compiling with gfortran
 
         real(real64) :: y
         y = 0d0
@@ -82,6 +83,7 @@ program stat_code_msg_getter
     end if
 
     y = inverse(0d0, msg=msg)
+    print *, allocated(msg), len(msg)
     if (is_status(msg, statuses%error_occurred)) then
         print *, y, msg
     end if

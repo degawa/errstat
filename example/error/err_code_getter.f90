@@ -29,7 +29,7 @@ contains
         use, intrinsic :: ieee_arithmetic
         implicit none
         real(real64), intent(in) :: x
-        type(error_stat_type), intent(inout), optional :: err
+        type(error_stat_type), intent(out), optional :: err
 
         real(real64) :: y
         y = 0d0
