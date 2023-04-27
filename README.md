@@ -86,33 +86,33 @@ The error handling can be more simplified.
 
 ```Fortran
     if (ieee_is_nan(y)) then
-        call catch_error(1, "the result is not-a-number", err)
+        call catch_error(1, "the result is not-a-number", stat)
         return
     end if
 
     if (.not. ieee_is_finite(y)) then
-        call catch_error(2, "the result is infinite", err)
+        call catch_error(2, "the result is infinite", stat)
         return
     end if
 
-    call set_success(err)
+    call set_success(stat)
 ```
 
 ```Fortran
-    type(error_stat_type) :: err
+    type(error_stat_type) :: stat
 
-    y = inverse(1d0, err)
-    if (does_error_occur(err)) then
-        print *, err%get_message()
+    y = inverse(1d0, stat)
+    if (error_occurrd(stat)) then
+        print *, stat%get_message()
     end if
 ```
 
 ## Usage
 ### Requirement
 - A Fortran compiler
-    - The library is tested using gfortran 10.3.0, intel fortran 2021.1, and nag fortran 7.1 on Windows 10.
+    - The library is tested using gfortran 11.2.0, intel fortran 2021.5, and nag fortran 7.1 on Windows 10.
 - fpm
-    - The library supports fpm (fortran-lang/fpm) for build. fpm 0.5.0, alpha is used.
+    - The library supports fpm (fortran-lang/fpm) for build. fpm 0.7.0, alpha is used.
 - FORD (optional)
     - FORD is used for generating the API document.
 
