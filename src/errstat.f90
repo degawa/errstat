@@ -22,5 +22,7 @@ module errstat
         error_occurred
     use :: errstat_interface_getErrorMessage, only: &
         Iget_error_message
+    use :: errstat_repository_message, only: &
+        message_repository_atype, stat_to_string
     implicit none
 end module errstat
