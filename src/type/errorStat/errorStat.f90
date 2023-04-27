@@ -1,5 +1,5 @@
-!>The `errstat_type_errorStat` module provides user-derived type
-!>related to error handling. for handling an error status and message.
+!>The `errstat_type_errorStat` module provides an user-derived type
+!>related to error handling.
 !>
 !>The derived type `error_stat_type` is used for handling an error status and message.
 !>It has components to store the status and message.
