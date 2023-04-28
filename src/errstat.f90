@@ -5,24 +5,32 @@
 ! like `use :: errstat`.
 !
 module errstat
-    use :: errstat_type_errorStat, only: &
-        error_stat_type
-    use :: errstat_type_task_adt, only: &
-        task_type
-    use :: errstat_constant_status, only: &
-        success_status_code, &
-        success_status_msg
-    use :: errstat_proc_catchStatus, only: &
-        catch_status
-    use :: errstat_proc_catchError, only: &
-        catch_error, set_success
-    use :: errstat_proc_isStatus, only: &
-        is_status, statuses
-    use :: errstat_proc_errorOccurred, only: &
-        error_occurred
-    use :: errstat_interface_getErrorMessage, only: &
-        Iget_error_message
-    use :: errstat_repository_message, only: &
-        message_repository_atype, stat_to_string
-    implicit none
+    use :: errstat_type_errorStat
+    use :: errstat_type_task_adt
+    use :: errstat_constant_status
+    use :: errstat_proc_catchStatus
+    use :: errstat_proc_catchError
+    use :: errstat_proc_isStatus
+    use :: errstat_proc_errorOccurred
+    use :: errstat_interface_getErrorMessage
+    use :: errstat_repository_message
+    private
+    ! types
+    public :: error_stat_type
+    public :: task_type
+    public :: message_repository_atype
+    ! procedures
+    public :: catch_status
+    public :: catch_error
+    public :: set_success
+    public :: error_occurred
+    public :: has_message
+    public :: is_status
+    public :: stat_to_string
+    ! parameters
+    public :: success_status_code
+    public :: success_status_msg
+    public :: statuses
+    ! interfaces
+    public :: Iget_error_message
 end module errstat
