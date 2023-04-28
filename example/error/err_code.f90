@@ -62,4 +62,7 @@ program err_code
     if (error_occurred(stat)) then
         print *, stat%get_message()
     end if
+
+    call set_success(stat, "no error")
+    if (has_message(stat)) print *, stat%get_message()
 end program err_code
