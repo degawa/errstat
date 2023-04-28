@@ -17,6 +17,11 @@ module errstat_proc_catchError
         procedure :: catch_error_w_repository
     end interface
 
+    interface set_success
+        procedure :: set_success_
+        procedure :: set_success_w_msg
+    end interface
+
 contains
 
     !>Sets `err_stat` from `stat_code` and `err_msg`.
@@ -104,7 +109,7 @@ contains
     !>- set `stat` to `success_status_code`
     !>- set `msg` to `success_status_msg`
     !>
-    subroutine set_success(err_stat)
+    subroutine set_success_(err_stat)
         use :: errstat_type_errorStat
         use :: errstat_constant_status
         implicit none
@@ -113,5 +118,24 @@ contains
 
         if (present(err_stat)) &
             call err_stat%set_status_and_message(success_status_code, success_status_msg)
-    end subroutine set_success
+    end subroutine set_success_
+
+    !>Sets `error_stat_type` object as the success status with specified message.
+    !>This procedure
+    !>
+    !>- set `stat` to `success_status_code`
+    !>- set `msg` to `message`
+    !>
+    subroutine set_success_w_msg(err_stat, message)
+        use :: errstat_type_errorStat
+        use :: errstat_constant_status
+        implicit none
+        type(error_stat_type), intent(out), optional :: err_stat
+            !! an object for handling an error status and message.
+        character(*), intent(in) :: message
+            !! the message of the status.
+
+        if (present(err_stat)) &
+            call err_stat%set_status_and_message(success_status_code, message)
+    end subroutine set_success_w_msg
 end module errstat_proc_catchError
